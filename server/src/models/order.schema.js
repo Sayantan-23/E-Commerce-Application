@@ -18,7 +18,7 @@ const orderSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required:true
+      required: true,
     },
     address: {
       type: String,
@@ -26,19 +26,19 @@ const orderSchema = new mongoose.Schema(
     },
     phoneNumber: {
       type: Number,
-      required: true
+      required: true,
     },
     amount: {
       type: Number,
-      required: true
+      required: true,
     },
     coupon: String,
     transactionId: String,
     status: {
       type: String,
-      enum: ["ORDERED", "SHIPPED", "DELIVERED", "CANCELED"],  //todo: have to try a better way
-      default: "ORDERED"
-    }
+      enum: ["ORDERED", "SHIPPED", "DELIVERED", "CANCELED"], //todo: have to try a better way
+      default: "ORDERED",
+    },
   },
   { timestamps: true }
 );
