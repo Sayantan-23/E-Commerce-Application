@@ -26,11 +26,15 @@ const productSchema = new mongoose.Schema(
     ],
     stock: {
       type: Number,
-      default: 0
+      default: 0,
     },
     sold: {
       type: Number,
-      default: 0
+      default: 0,
+    },
+    collectionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Collection",
     },
   },
   { timestamps: true }
