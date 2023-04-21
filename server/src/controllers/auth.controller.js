@@ -4,8 +4,8 @@ import User from "../models/user.schema.js";
 
 export const cookieOptions = {
   expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-  httpOnly: true
-}
+  httpOnly: true,
+};
 
 /******************************************************
  * @SIGNUP
@@ -51,44 +51,56 @@ export const singUp = asyncHandler(async (req, res) => {
 });
 
 export const login = asyncHandler(async (req, res) => {
-  const {email, password} = req.body
+  const { email, password } = req.body;
 
   //validation
   if (!email || !password) {
-      throw new CustomError("PLease fill all details", 400)
+    throw new CustomError("PLease fill all details", 400);
   }
 
-  const user = User.findOne({email}).select("+password")
+  const user = User.findOne({ email }).select("+password");
 
   if (!user) {
-      throw new CustomError("Invalid credentials", 400)
+    throw new CustomError("Invalid credentials", 400);
   }
 
-  const isPasswordMatched = await user.comparePassword(password)
+  const isPasswordMatched = await user.comparePassword(password);
 
   if (isPasswordMatched) {
-      const token = user.getJWTtoken()
-      user.password = undefined
-      res.cookie("token", token, cookieOptions)
-      return res.status(200).json({
-          success: true,
-          token,
-          user
-      })
+    const token = user.getJWTtoken();
+    user.password = undefined;
+    res.cookie("token", token, cookieOptions);
+    return res.status(200).json({
+      success: true,
+      token,
+      user,
+    });
   }
 
-  throw new CustomError("Password is incorrect", 400)
-})
+  throw new CustomError("Password is incorrect", 400);
+});
 
 export const logout = asyncHandler(async (req, res) => {
   res.cookie("token", null, {
-      expires: new Date(Date.now()),
-      httpOnly: true
-  })
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
 
   res.status(200).json({
-      success: true,
-      message: 'Logged Out'
-  })
-})
+    success: true,
+    message: "Logged Out",
+  });
+});
 
+export const getProfile = asyncHandler(async (req, res) => {
+  const { user } = req;
+
+  if (!user) {
+    throw new CustomError("User not found", 401);
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
