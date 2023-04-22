@@ -9,7 +9,7 @@ import fs from "fs";
 
 /**********************************************************
  * @ADD_PRODUCT
- * @route https://localhost:5000/api/product
+ * @route https://127.0.0.1:27017/api/product
  * @description Controller used for creating a new product
  * @description Only admin can create the coupon
  * @description Uses AWS S3 Bucket for image upload
