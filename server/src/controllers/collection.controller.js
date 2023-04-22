@@ -6,7 +6,7 @@ export const createCollection = asyncHandler(async (req, res) => {
   const { name } = req.body;
 
   if (!name) {
-    throw new CustomError("Colection name is required", 400);
+    throw new CustomError("Collection name is required", 400);
   }
 
   const collection = await Collection.create({
@@ -25,7 +25,7 @@ export const updateCollection = asyncHandler(async (req, res) => {
   const { id: collectionId } = req.params;
 
   if (!name) {
-    throw new CustomError("Colection name is required", 400);
+    throw new CustomError("Collection name is required", 400);
   }
 
   let updatedCollection = await Collection.findByIdAndUpdate(
@@ -40,7 +40,7 @@ export const updateCollection = asyncHandler(async (req, res) => {
   );
 
   if (!updatedCollection) {
-    throw new CustomError("Colection not found", 400);
+    throw new CustomError("Collection not found", 400);
   }
 
   res.status(200).json({
@@ -56,7 +56,7 @@ export const deleteCollection = asyncHandler(async (req, res) => {
   const collectionToDelete = await Collection.findById(collectionId);
 
   if (!collectionToDelete) {
-    throw new CustomError("Colection to be deleted not found", 400);
+    throw new CustomError("Collection to be deleted not found", 400);
   }
 
   await collectionToDelete.remove();
